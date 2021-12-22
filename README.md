@@ -63,7 +63,7 @@ sven.i18n.setLanguage('zh', this.zh.json);
 - reaction：autorun 的变种，对于如何追踪 observable 赋予了更细粒度的控制。在数据表达式首次返回一个新值后运行，在执行 效果 函数时访问的任何 observable 都不会被追踪
 - 详细信息参考 [autorun](https://cn.mobx.js.org/refguide/autorun.html)、[reaction](https://cn.mobx.js.org/refguide/reaction.html)
 
-```
+```javascript
 declare module sven {
   /**
    * @sven.atuorun
@@ -87,7 +87,7 @@ declare module sven {
 
 #### 3. storage
    - 本地缓存自动存取，共有如下4个方法
-```
+```javascript
 declare module sven {
   /**
    * 本地缓存
@@ -129,7 +129,7 @@ export default class TestStore {
 ```
 
 #### 4. emitter
-```
+```javascript
 type Emitter = {
   /**
    * priority:收到事件监听时的调度优先级，数值越大则优先级越高，默认值：2
