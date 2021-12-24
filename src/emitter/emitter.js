@@ -29,7 +29,7 @@ export class Emitter {
   }
 
   hasListener(event) {
-    return this.mapListener[event];
+    return this.mapListener[event] && Object.keys(this.mapListener[event]).length > 0;
   }
 
   emit(event, msg) {

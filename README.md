@@ -1,4 +1,4 @@
-# 基于MobxLabel的界面数据绑定插件-sven
+# 基于mobx的界面数据绑定插件-sven
 ## 主要功能
 1.  插件基于mobx实现了页面的数据绑定。绑定后每当数值更新时，页面数据即可自动更新，告别烦人的this.label***.string = ****;
 2. localStorage自动存取，支持不同用户id各自的本地数据缓存，可随时切换，并自动更新。
@@ -56,6 +56,7 @@ sven.i18n.setLanguage('zh', this.zh.json);
         - 2 target有值时，从绑定的node中的component获取
            - 如：main.account，则绑定的值为 target.getComponent('main').account
     - defaultValue: string 当获取到的值为null或者object时，则使用本栏位的结果填入。本栏位同样支持 @i18n.*  格式输入
+        - 编辑器中为方便预览，当获取到的值为空字符串时，也使用本栏位结果填入
 
 #### 2. sven.autorun,sven.reaction
 - mobx.autorun和mobx.reaction 两个方法的语法糖，在onLoad时挂载，onDestroy后自动销毁  

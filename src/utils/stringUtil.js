@@ -4,7 +4,7 @@ export function format(str, ...args) {
       str = str.replace(/\{[a-zA-Z0-9]+\}/g, v => {
         let key = v.replace(/^{/, '').replace(/}$/, '');
         if (args[0][key] != undefined) {
-          return `{${args[0][key]}`;
+          return `${args[0][key]}`;
         }
         return v;
       });

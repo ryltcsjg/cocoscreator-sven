@@ -5,8 +5,8 @@ type Emitter = {
    * priority:收到事件监听时的调度优先级，数值越大则优先级越高，默认值：2
    * @return number:返回事件的id，移除监听时需要用到它 sven.emitter.off(id);
    * */
-  on: (event: string, cb: Function, obj?: any = null, priority?: number = 2) => number;
-  once: (event: string, cb: Function, obj?: any = null, priority?: number = 2) => void;
+  on: (event: string, cb: Function, obj?: any, priority?: number) => number;
+  once: (event: string, cb: Function, obj?: any, priority?: number) => void;
   hasListener: (event: string) => object;
   off: (id: number) => void;
   emit: (event: string, msg?: any) => void;
@@ -58,10 +58,10 @@ declare module sven {
 
   /**
    * 节流函数
-   * @param time 节流时间，每{time}ms内只会执行一次该函数
-   * @param callWhenEnd 配合throttle使用，在节流时间结束后，如果过程中有call过函数，则再执行一次
+   * @param time 节流时间，每{time}ms内只会执行一次该函数    默认值：300
+   * @param callWhenEnd 配合throttle使用，在节流时间结束后，如果过程中有call过函数，则再执行一次    默认值：false
    * */
-  export const throttle: (time: number = 300, callWhenEnd: boolean = false) => MethodDecorator;
+  export const throttle: (time?: number, callWhenEnd?: boolean) => MethodDecorator;
 
   /**
    * 全局事件监听器
@@ -116,6 +116,8 @@ declare module sven {
   export const storageByUid: (options?: { key?: string }) => PropertyDecorator;
 
   export const i18n: I18n;
+  export const _store: any;
+  export let MobxLabel: any;
 }
 
 namespace cc {

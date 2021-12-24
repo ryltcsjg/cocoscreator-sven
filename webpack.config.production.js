@@ -1,7 +1,5 @@
 const path = require('path');
 
-console.warn(process.env)
-
 module.exports = {
   mode: 'production',
   entry: {
