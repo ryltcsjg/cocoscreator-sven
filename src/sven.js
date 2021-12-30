@@ -6,7 +6,7 @@ import { makeFunctionListenClickEvent } from './click/clickEvent';
 import { throttle } from './throttle/throttle';
 import { Store, storage, markUid, storageByUid } from './storage/storage';
 import { i18nLogic } from './i18n/i18nLogic';
-import './fitCccJs';
+// import './fitCccJs';
 
 function init(options) {
   options.store && (sven._store = options.store);

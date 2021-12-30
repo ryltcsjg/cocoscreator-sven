@@ -1,6 +1,5 @@
 import { format } from '../utils/stringUtil';
 import { observable } from 'mobx';
-
 class I18nLogic {
   language = observable.box('');
   content = null;
@@ -11,8 +10,9 @@ class I18nLogic {
     if (!CC_EDITOR || !Editor) {
       return;
     }
-    let prefix = Editor.url('db://assets/') + '/';
-    const fs = Editor.require('fs');
+
+    let prefix = Editor.Project.path + '/assets/';
+    const fs = eval("require('fs')");
     let filePath = prefix + path;
     try {
       if (this.filePath) {
@@ -20,8 +20,12 @@ class I18nLogic {
       }
       fs.unwatchFile(filePath);
       fs.watchFile(filePath, () => {
-        cc.log('i18n文件变化，重新加载', lan);
+        console.log('i18n文件变化，重新加载', lan);
         this.refreshEditorLanguage();
+        cc.director
+          .getScene()
+          .getComponentsInChildren(sven.MobxLabel)
+          .forEach(mobxLabel => mobxLabel.renderLabel());
       });
       this.filePath = filePath;
       this.refreshEditorLanguage();
@@ -38,15 +42,9 @@ class I18nLogic {
     if (!this.filePath) {
       return;
     }
-    const fs = Editor.require('fs');
+    const fs = eval("require('fs')");
     let buffer = fs.readFileSync(this.filePath);
     this.content = JSON.parse(buffer.toString());
-    // cc.log('加载i18n文件成功', filePath.format(lan));
-
-    cc.director
-      .getScene()
-      .getComponentsInChildren('MobxLabel')
-      .forEach(mobxLabel => mobxLabel.renderLabel());
   }
 
   get(key, ...formatStr) {
@@ -58,14 +56,14 @@ class I18nLogic {
     for (let i = 0; i < keys.length; i++) {
       result = result && result[keys[i]];
       if (result == null) {
-        console.warn(`找不到key值为${key}的文本`);
+        !Editor && console.warn(`找不到key值为${key}的文本`);
         return '';
       }
     }
     if (typeof result == 'string') {
       return formatStr.length > 0 ? format(result, ...formatStr) : result;
     }
-    console.warn(`找不到key值为${key}的文本`);
+    !Editor && console.warn(`找不到key值为${key}的文本`);
     return '';
   }
 

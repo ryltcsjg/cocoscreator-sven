@@ -1,64 +1,55 @@
-const MobxLabelFormat = cc.Class({
-  name: 'MobxLabelFormat',
-  properties: {
-    target: { default: null, type: cc.Node },
-    key: '',
-    defaultValue: '',
-  },
-});
+import { Node, CCString, _decorator, Component, Label } from 'cc';
+import { EDITOR } from 'cc/env';
+const { property, ccclass, executeInEditMode } = _decorator;
+
+@ccclass('MobxLabelFormat')
+class MobxLabelFormat {
+  @property(Node) target: Node = null;
+  @property(CCString) key = '';
+  @property(CCString) defaultValue = '';
+}
 
 const regI18n = /^@i18n\./;
 
-export const MobxLabel = cc.Class({
-  extends: cc.Component,
-  editor: {
-    executeInEditMode: true,
-    menu: 'component/MobxLabel',
-  },
-  properties: {
-    _i18n: '',
-    i18n: {
-      type: cc.String,
-      get: function() {
-        return this._i18n;
-      },
-      set: function(v) {
-        this._i18n = v;
-        if (CC_EDITOR) {
-          this.__editorUpdateLabel();
-        } else {
-          this.renderLabel();
-        }
-      },
-    },
-    _format: [],
-    format: {
-      type: MobxLabelFormat,
-      get: function() {
-        return this._format;
-      },
-      set: function(v) {
-        this._format = v;
-        if (CC_EDITOR) {
-          this.__editorUpdateLabel();
-        } else {
-          this.renderLabel();
-        }
-      },
-    },
-  },
-  ctor() {
-    if (CC_EDITOR) {
-      setTimeout(() => this.renderLabel(), 0);
+@ccclass('MobxLabel')
+@executeInEditMode
+export class MobxLabel extends Component {
+  @property(CCString) _i18n = '';
+  @property(CCString)
+  get i18n() {
+    return this._i18n;
+  }
+  set i18n(v) {
+    this._i18n = v;
+    if (EDITOR) {
+      this.__editorUpdateLabel();
+    } else {
+      this.renderLabel();
     }
-  },
-  @sven.throttle(1000, true)
+  }
+
+  @property(MobxLabelFormat) _format: MobxLabelFormat[] = [];
+  @property(MobxLabelFormat)
+  get format() {
+    return this._format;
+  }
+  set format(v) {
+    this._format = v;
+    if (EDITOR) {
+      this.__editorUpdateLabel();
+    } else {
+      this.renderLabel();
+    }
+  }
+
+  @sven.throttle(300, true)
   __editorUpdateLabel() {
     this.renderLabel();
-  },
+  }
+
   @sven.autorun
   renderLabel() {
-    let formatString = [];
+    let formatString: string[] = [];
     this._format.forEach(({ target, key, defaultValue }) => {
       if (regI18n.test(defaultValue)) {
         defaultValue = sven.i18n.get(defaultValue.replace('@i18n.', ''));
@@ -86,7 +77,7 @@ export const MobxLabel = cc.Class({
 
       //在编辑器中为了容易预览，对值为空字符串的内容展示默认值
       formatString.push(
-        typeof from == 'object' || typeof from == 'undefined' || (CC_EDITOR && from === '') ? defaultValue : from
+        typeof from == 'object' || typeof from == 'undefined' || (EDITOR && from === '') ? defaultValue : from
       );
     });
     let labelString = '';
@@ -100,9 +91,9 @@ export const MobxLabel = cc.Class({
     } else {
       labelString = formatString.join('');
     }
-    let labelComponent = this.node.getComponent(cc.Label);
+    let labelComponent = this.node.getComponent(Label);
     labelComponent && labelComponent.string != labelString && (labelComponent.string = labelString);
-  },
-});
+  }
+}
 
 sven.MobxLabel = MobxLabel;

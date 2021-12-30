@@ -36,6 +36,9 @@ export const Store = mainKey => Context => {
   class Son extends Context {
     constructor() {
       super();
+      if (CC_EDITOR) {
+        return;
+      }
       storeList.push(this);
       this.__initStore();
     }

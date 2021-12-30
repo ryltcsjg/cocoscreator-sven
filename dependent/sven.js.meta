@@ -1,9 +1,18 @@
 {
-  "ver": "1.0.5",
-  "uuid": "f8878c5b-4201-47c1-ad3a-612aedcc9bf5",
-  "isPlugin": true,
-  "loadPluginInWeb": true,
-  "loadPluginInNative": true,
-  "loadPluginInEditor": true,
-  "subMetas": {}
+  "ver": "4.0.22",
+  "importer": "javascript",
+  "imported": true,
+  "uuid": "be042fef-9e73-4021-bac1-b2ff4d4d882d",
+  "files": [
+    ".js"
+  ],
+  "subMetas": {},
+  "userData": {
+    "isPlugin": true,
+    "executionScope": "global",
+    "loadPluginInWeb": true,
+    "loadPluginInNative": true,
+    "loadPluginInEditor": true,
+    "importAsPlugin": true
+  }
 }
