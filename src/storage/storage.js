@@ -34,8 +34,8 @@ export const Store = mainKey => Context => {
   let context = Context.prototype;
   context[storageList] = context[storageList] || [];
   class Son extends Context {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       storeList.push(this);
       this.__initStore();
     }
